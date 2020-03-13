@@ -8,6 +8,7 @@ This action is a part of [GitHub Actions Library](https://github.com/rtCamp/gith
 Changes: 
 1) It configured to get webhook from google secrets. To do this it needs ENV variables called GCP_CREDENTIALS with GCP SA JSON. You will get error message if you don't specify GCP_CREDENTIALS. 
 2) You can specify JOB_STATUS to send notification accordingly to workflow event. In other case if this variable not used it will send started build message. 
+3) You need specify _ENV variable for title, otherwise title does not appears
 
 ## Usage
 
