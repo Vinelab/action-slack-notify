@@ -22,8 +22,8 @@ if [[ -z "$JOB_STATUS" ]]; then
     export SLACK_MESSAGE=$SLACK_MESSAGE_STARTED
     export SLACK_COLOR=$SLACK_COLOR_STARTED
 else
-    MSG=SLACK_MESSAGE_$(echo $JOB_STATUS | tr a-z A-Z )
-    MSG_COLOR=SLACK_COLOR_$(echo $JOB_STATUS | tr a-z A-Z )
+    MSG=SLACK_MESSAGE_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
+    MSG_COLOR=SLACK_COLOR_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
     export SLACK_MESSAGE=${!MSG}
 	export SLACK_COLOR=${!MSG_COLOR}
 fi
