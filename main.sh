@@ -19,7 +19,7 @@ export SLACK_COLOR_FAILURE="#ff0000"
 
 
 if [[ -z "$JOB_STATUS" ]]; then
-    export SLACK_MESSAGE=$SLACK_MESSAGE_STARTED
+    export SLACK_MESSAGE="$SLACK_MESSAGE_STARTED to $_ENV"
     export SLACK_COLOR=$SLACK_COLOR_STARTED
 else
     MSG=SLACK_MESSAGE_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
