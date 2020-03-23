@@ -24,7 +24,7 @@ if [[ -z "$JOB_STATUS" ]]; then
 else
     MSG=SLACK_MESSAGE_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
     MSG_COLOR=SLACK_COLOR_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
-    export SLACK_MESSAGE=${!MSG}
+    export SLACK_MESSAGE="${!MSG} to $_ENV"
 	export SLACK_COLOR=${!MSG_COLOR}
 fi
 
