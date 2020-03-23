@@ -90,7 +90,8 @@ if [[ -z "$SLACK_MESSAGE" ]]; then
 fi
 
 if [[ -n "$_ENV" ]]; then
-	export SLACK_TITLE=$_ENV
+	#export SLACK_TITLE=$_ENV
+	export SLACK_TITLE=""
 fi
 
 slack-notify "$@"
