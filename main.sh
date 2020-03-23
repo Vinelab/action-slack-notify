@@ -8,10 +8,10 @@ export COMMIT_MESSAGE=$(cat "/github/workflow/event.json" | jq .commits | jq '.[
 
 # slack messages
 
-export SLACK_MESSAGE_SUCCESS="$GITHUB_REPOSITORY build: Success :the_horns:"
-export SLACK_MESSAGE_STARTED="$GITHUB_REPOSITORY build: Started :clapper:"
-export SLACK_MESSAGE_CANCELLED="$GITHUB_REPOSITORY build: Cancelled: :eyes:"
-export SLACK_MESSAGE_FAILURE="$GITHUB_REPOSITORY build: Failure: :boom:"
+export SLACK_MESSAGE_SUCCESS="$GITHUB_REPOSITORY build $_ENV: Success :the_horns:"
+export SLACK_MESSAGE_STARTED="$GITHUB_REPOSITORY build to $_ENV: Started :clapper:"
+export SLACK_MESSAGE_CANCELLED="$GITHUB_REPOSITORY build $_ENV: Cancelled: :eyes:"
+export SLACK_MESSAGE_FAILURE="$GITHUB_REPOSITORY build $_ENV: Failure: :boom:"
 export SLACK_COLOR_SUCCESS="#6aa84f"
 export SLACK_COLOR_STARTED="#0074D9"
 export SLACK_COLOR_CANCELLED="#cccccc"
@@ -19,12 +19,12 @@ export SLACK_COLOR_FAILURE="#ff0000"
 
 
 if [[ -z "$JOB_STATUS" ]]; then
-    export SLACK_MESSAGE="$SLACK_MESSAGE_STARTED to $_ENV"
+    export SLACK_MESSAGE="$SLACK_MESSAGE_STARTED"
     export SLACK_COLOR=$SLACK_COLOR_STARTED
 else
     MSG=SLACK_MESSAGE_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
     MSG_COLOR=SLACK_COLOR_$(echo $JOB_STATUS | tr '[:lower:]' '[:upper:]')
-    export SLACK_MESSAGE="${!MSG} to $_ENV"
+    export SLACK_MESSAGE="${!MSG}"
 	export SLACK_COLOR=${!MSG_COLOR}
 fi
 
