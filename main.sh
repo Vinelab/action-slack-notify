@@ -8,10 +8,10 @@ export COMMIT_MESSAGE=$(cat "/github/workflow/event.json" | jq .commits | jq '.[
 
 # slack messages
 
-export SLACK_MESSAGE_SUCCESS="$GITHUB_REPOSITORY build $_ENV: Success :the_horns:"
+export SLACK_MESSAGE_SUCCESS="$GITHUB_REPOSITORY build to $_ENV: Success :the_horns:"
 export SLACK_MESSAGE_STARTED="$GITHUB_REPOSITORY build to $_ENV: Started :clapper:"
-export SLACK_MESSAGE_CANCELLED="$GITHUB_REPOSITORY build $_ENV: Cancelled: :eyes:"
-export SLACK_MESSAGE_FAILURE="$GITHUB_REPOSITORY build $_ENV: Failure: :boom:"
+export SLACK_MESSAGE_CANCELLED="$GITHUB_REPOSITORY build to $_ENV: Cancelled: :eyes:"
+export SLACK_MESSAGE_FAILURE="$GITHUB_REPOSITORY build to $_ENV: Failure: :boom:"
 export SLACK_COLOR_SUCCESS="#6aa84f"
 export SLACK_COLOR_STARTED="#0074D9"
 export SLACK_COLOR_CANCELLED="#cccccc"
