@@ -1,0 +1,47 @@
+name: Run redis-backup pipeline
+on:
+  push:
+    branches:
+    - master
+    - staging
+    paths:
+    - 'manifests/ops/redis-backups/**.yml'
+
+env:
+  TOPIC: github-actions
+  ENV_PRODUCTION: production
+  ENV_STAGING: staging
+  GCP_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    
+jobs:
+  send-pubsub:
+    name: Send PubSub message
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setup workflow environment variables
+      if: always()
+      run: |
+        if [[ "$GITHUB_REF" == "refs/heads/master" ]]; then \
+          echo "::set-env name=_ENV::$ENV_PRODUCTION"; \
+        else 
+          echo "::set-env name=_ENV::$ENV_STAGING"; \
+        fi
+    - name: Slack notification ci started
+      if: always()
+      uses: Vinelab/action-slack-notify@master
+      
+    - name: Configurate google auth for publish 
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '270.0.0'
+        service_account_key: ${{ env.GCP_CREDENTIALS }}
+        export_default_credentials: true
+
+    - name: Send PubSub
+      run: |
+        gcloud pubsub topics publish $TOPIC --project $GKE_PROJECT --message '{"pipeline":"redis-backup", "env":"${{ env._ENV }}"}'
+    - name: Slack notification ci status
+      uses: Vinelab/action-slack-notify@master 
+      if: always()
+      env:
+        JOB_STATUS: ${{ job.status }}
