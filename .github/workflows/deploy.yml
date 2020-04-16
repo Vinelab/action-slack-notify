@@ -18,6 +18,10 @@ jobs:
     name: Send PubSub message
     runs-on: ubuntu-latest
     steps:
+    - name: Show INFO
+      run: echo $GITHUB_REF
+
+
     - name: Setup workflow environment variables
       if: always()
       run: |
