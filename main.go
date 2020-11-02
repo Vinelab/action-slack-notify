@@ -21,6 +21,7 @@ const (
 	EnvSiteName       = "SITE_NAME"
 	EnvHostName       = "HOST_NAME"
 	EnvDepolyPath     = "DEPLOY_PATH"
+	EnvCoverageURL    = "COVERAGE_URL"
 )
 
 type Webhook struct {
@@ -83,6 +84,18 @@ func main() {
 			Value: envOr(EnvSlackMessage, "EOM"),
 			Short: false,
 		},
+	}
+	coverageUrl := envOr(EnvCoverageURL, "")	
+	if coverageUrl != "" {
+		newfields:= []Field{
+			{
+				Title: "Test coverage URL",
+				Value: os.Getenv(coverageUrl),
+				Short: false,
+			},
+		}
+		fields = append(newfields, fields...)
+			
 	}
 
 	hostName := os.Getenv(EnvHostName)
