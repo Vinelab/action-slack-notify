@@ -5,7 +5,6 @@ export SLACK_USERNAME=${SLACK_USERNAME:-"GH Action - Build"}
 export CI_SCRIPT_OPTIONS="ci_script_options"
 export SLACK_TITLE=${SLACK_TITLE:-"Message"}
 export COMMIT_MESSAGE=$(cat "/github/workflow/event.json" | jq .commits | jq '.[0].message' -r)
-export COVERAGE_URL="-"
 
 # slack messages
 
@@ -29,10 +28,6 @@ else
 	export SLACK_COLOR=${!MSG_COLOR}
 fi
 
-if [[ -z "$COVERAGE_URL" ]]; then
-    export COVERAGE_URL
-    export COVERAGE_TITLE="Test coverage URL"
-fi
 
 hosts_file="$GITHUB_WORKSPACE/.github/hosts.yml"
 
