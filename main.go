@@ -85,12 +85,12 @@ func main() {
 			Short: false,
 		},
 	}
-	coverageUrl := envOr(EnvCoverageURL, "")	
+	coverageUrl := os.Getenv(EnvCoverageURL) 
 	if coverageUrl != "" {
 		newfields:= []Field{
 			{
 				Title: "Test coverage URL",
-				Value: os.Getenv(coverageUrl),
+				Value: os.Getenv(EnvCoverageURL),
 				Short: false,
 			},
 		}
