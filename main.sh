@@ -50,7 +50,7 @@ fi
 # Google Auth
 echo $GCP_CREDENTIALS > /github/home/key.json
 export project=$(cat /github/home/key.json | python -c "import sys, json; print json.load(sys.stdin)['project_id']")
-echo ::set-env name=GKE_PROJECT::$project
+echo "GKE_PROJECT=$project" >> $GITHUB_ENV;
 export client_email=$(cat /github/home/key.json | python -c "import sys, json; print json.load(sys.stdin)['client_email']")
 gcloud auth activate-service-account $client_email --key-file=/github/home/key.json
 export SLACK_WEBHOOK=$(gcloud secrets versions access latest --secret="SLACK_WEBHOOK" --project $project)
