@@ -25,11 +25,12 @@ jobs:
     - name: Setup workflow environment variables
       if: always()
       run: |
-        if [[ "$GITHUB_REF" == "refs/heads/master" ]]; then \
-          echo "::set-env name=_ENV::$ENV_PRODUCTION"; \
+        if [[ "$GITHUB_EVENT_NAME" == "release" ]]; then \
+          echo "_ENV=$ENV_PRODUCTION" >> $GITHUB_ENV; \
         else 
-          echo "::set-env name=_ENV::$ENV_STAGING"; \
+          echo "_ENV=$ENV_STAGING" >> $GITHUB_ENV; \
         fi
+        
     - name: Slack notification ci started
       if: always()
       uses: Vinelab/action-slack-notify@master
